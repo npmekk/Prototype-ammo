@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -10,12 +11,16 @@ public class GameManager : MonoBehaviour
 	public static Transform cam;
 	public bool started;
 	public float score;
+	public static int startAmmo = 5;
+	public static int ammoAmount; 
 
 	public TextMeshProUGUI scoreText;
 	public TextMeshProUGUI bestScoreText;
 	public TextMeshProUGUI completedText;
 	public TextMeshProUGUI instructionsText;
 	public TextMeshProUGUI recordText;
+	public TextMeshProUGUI ammoText;
+
 
 	private void Awake()
 	{
@@ -42,6 +47,7 @@ public class GameManager : MonoBehaviour
 	{
 		score = 0;
 		scoreText.text = score.ToString("00:00.00");
+		ammoAmount = startAmmo;
 	}
 
 	public void Completed()
@@ -64,8 +70,16 @@ public class GameManager : MonoBehaviour
         {
 			score += Time.deltaTime;
 			scoreText.text = score.ToString("00:00.00");
+			if (ammoAmount > 0)
+			{
+				ammoText.text = "Ammo " + ammoAmount;
+			}
+			else if (ammoAmount == 0)
+			{
+				ammoText.text = "Out of grapple !";
+			}
 		}
-
+		
 		if (Input.GetKeyDown(KeyCode.R))
 		{
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
