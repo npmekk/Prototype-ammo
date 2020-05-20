@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 	public LineRenderer web;
 	public float walkSpeed = 1f;
 	public float jumpHeight = 1f;
-	public float jumpGravity = 2f;
+	public float jumpGravity = 1f;
 
 	private Rigidbody rb;
 	private Vector3 endPoint;
@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
 	private void Update()
     {
 		var transPos = transform.position;
-		if (Input.GetButtonDown("Fire1") && GameManager.ammoAmount > 0)
+		if (Input.GetButtonDown("Fire1"))
 		{
 			RaycastHit hit;
 			int layerMask = 1 << 9;
@@ -43,8 +43,7 @@ public class PlayerController : MonoBehaviour
 			{
 				endPoint = hit.point - (GameManager.cam.forward.normalized * 0.05f);
 				ToggleJoint(true);
-				GameManager.ammoAmount -= 1;
-				
+
 				var connectedRigidbody = hit.collider.GetComponent<Rigidbody>();
 				if (connectedRigidbody)
 				{
